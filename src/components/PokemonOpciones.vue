@@ -1,17 +1,25 @@
 <template>
   <div class="options-container">
+    <!-- estas opciones las va a enviar el padre -->
     <ul>
-      <li>Opcion 1</li>
-      <li>Opcion 2</li>
-      <li>Opcion 3</li>
-      <li>Opcion 4</li>
+      <li @click="seleccionado" v-for="poke in opciones" :key="poke.id">{{poke.nombre}}</li>
+      
     </ul>
   </div>
 </template>
 <script>
 export default {
-    x
-
+    props: {
+        opciones: {
+            type: Array,
+            required: true,
+        },
+    },
+    methods: {
+        seleccionado(){
+            console.log("Seleccionado hizo click");
+        }
+    },
 };
 </script>
 <style>
