@@ -2,7 +2,7 @@
   <div class="options-container">
     <!-- estas opciones las va a enviar el padre -->
     <ul>
-      <li @click="seleccionado" v-for="poke in opciones" :key="poke.id">{{poke.nombre}}</li>
+      <li @click="seleccionado(poke.id)" v-for="poke in opciones" :key="poke.id">{{poke.nombre}}</li>
       
     </ul>
   </div>
@@ -16,8 +16,16 @@ export default {
         },
     },
     methods: {
-        seleccionado(){
-            console.log("Seleccionado hizo click");
+        seleccionado(id){
+            console.log("Hizo click");
+            console.log(id);
+            const objetoEnviado = {
+                identificador: id,
+                valor2: true,
+                valor3: "Pokemado",
+            };
+            
+            this.$emit("getId", objetoEnviado);
         }
     },
 };

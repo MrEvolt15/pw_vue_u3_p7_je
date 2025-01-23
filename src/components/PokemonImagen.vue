@@ -6,6 +6,11 @@
 </template>
 <script>
 export default {
+  data() {
+    return {
+      propPrueba: "Este texto es de prueba",
+    };
+  },
   props: {
     idPokemon: {
       type: Number,
@@ -29,6 +34,11 @@ export default {
       return `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/dream-world/${this.idPokemon}.svg`;
     },
   },
+  methods: {
+    metodoPrueba() {
+      console.log("Este es un metodo de prueba ejecutado desde el padre");
+    },
+  },
 };
 </script>
 <style>
@@ -41,6 +51,7 @@ export default {
 img {
   height: 200px;
   width: 200px;
+  margin-top: 10px;
   /*Para que deje de respetar la posision de los demas elementos, quitarle del espacio que ocupa en el display*/
   position: absolute;
   right: 43%;
