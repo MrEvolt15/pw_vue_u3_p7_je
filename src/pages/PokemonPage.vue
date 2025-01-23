@@ -1,8 +1,13 @@
 <template>
   <div v-if="pokeCorrecto!=null">
+    <h2>{{intentos}}</h2>
+    <h2 v-if="this.gano">Ganaste!!!!!!!!!!</h2>
+    <h2 v-if="this.intentos === 3">Perdiste!!!!!!!!!!!</h2>
     <h2>Adivina el pokemon de la Imagen</h2>
     <PokemonImagenVue ref="miHijo" :idPokemon="pokeCorrecto.id" :showImg="pokeShow" />
     <PokemonOpcionesVue @getId="validarRespuesta($event)" :opciones="pokemonArr" v-show="!this.gano"/>
+    
+    <button v-if="this.gano || this.intentos===3" @click="this.cargarJuego">Volvel a Jugar</button>
   </div>
 </template>
 <script>
@@ -19,6 +24,7 @@ export default {
       pokeCorrecto: null,
       pokeShow: false,
       gano: false,
+      intentos: 0,
     };
   },
   mounted() {
@@ -52,6 +58,9 @@ export default {
       const valorAleatorio = obtenerAleatorioFachada(0,3);
       console.log("Este es el aleatorio: "+valorAleatorio);
       this.pokeCorrecto = this.pokemonArr[valorAleatorio];
+      this.pokeShow = false;
+      this.gano = false;
+      this.intentos = 0;
     },
     validarRespuesta(valor){
       console.log("Validando respuesta");
@@ -62,10 +71,13 @@ export default {
 
         //this.pokeShow = true;
         this.pokeShow = valor.valor2;
-        this.gano = true;
+        if(this.intentos !==3){
+          this.gano = true;
+        }
       }else{
         console.log("Respuesta incorrecta");
         this.pokeShow = false;
+        this.intentos++;
       }
       const valorHijo = this.$refs.miHijo.idPokemon;
       console.log("Este es el valor del hijo por refs: "+valorHijo);
@@ -79,4 +91,14 @@ export default {
 };
 </script>
 <style>
+button{
+  background-color: #4CAF50;
+  border: none;
+  color: white;
+  padding: 15px 32px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+}
 </style>
