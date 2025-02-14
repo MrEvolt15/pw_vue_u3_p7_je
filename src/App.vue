@@ -1,10 +1,11 @@
 <template>
   
-  <PokemonPageVue />
+  <PersonaPageVue />
 </template>
 
 <script>
 import HelloWorld from './components/HelloWorld.vue'
+import PersonaPageVue from './pages/PersonaPage.vue'
 import PokemonPageVue from './pages/PokemonPage.vue'
 
 
@@ -13,6 +14,7 @@ export default {
   components: {
     HelloWorld,
     PokemonPageVue,
+    PersonaPageVue,
 
   }
 }
