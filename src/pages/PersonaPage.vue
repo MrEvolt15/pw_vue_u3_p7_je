@@ -8,8 +8,6 @@ import FormularioComponenteVue from '@/components/FormularioComponente.vue'
 export default {
 components: {
     FormularioComponenteVue,
-    
-
   }
 }
 </script>

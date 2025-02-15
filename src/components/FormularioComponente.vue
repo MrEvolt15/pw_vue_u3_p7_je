@@ -1,65 +1,91 @@
 <template>
   <h1>Formulario Persona</h1>
-  <form>
+  
+    <label for="id">Id:</label>
+    <input type="text" id="id" v-model="id" />
+
     <label for="nombre">Nombre:</label>
-    <input type="text" id="nombre" v-model="nombre">
-    
+    <input type="text" id="nombre" v-model="nombre" />
+
     <label for="apellido">Apellido:</label>
-    <input type="text" id="apellido" v-model="apellido">
-    
+    <input type="text" id="apellido" v-model="apellido" />
+
     <label for="fecha">Fecha Nacimiento:</label>
-    <input type="date" id="fecha" v-model="edad">
-  </form>
-  <button @click="obtener()">Consultar</button>
+    <input type="date" id="fecha" v-model="fecha" />
+  
+  <button @click="consultar()">Consultar</button>
+  <button @click="guardar()">Guardar</button>
 </template>
-
-<script>
-import {obterPorId} from "@/client/PersonaClient.js";
+   
+  <script>
+import { obtenerPorIdFachada, insertarFachada } from "@/client/PersonaClient.js";
 export default {
-mounted:{
-    async obtener(){
-        const persona = await obterPorId(1);
-        console.log(persona);
+  data() {
+    return {
+      id: "",
+      nombre: "",
+      apellido: "",
+      fecha: "",
+    };
+  },
+  mounted() {
+    console.log("Componente montado");
+    obtenerPorIdFachada(4);
+  },
+  methods: {
+    async consultar() {
+      console.log("Consultar");
+      const data = await obtenerPorIdFachada(this.id);
+      this.nombre = data.nombre;
+      this.apellido = data.apellido;
+      this.fecha = data.fechaNacimiento;
+    },
+    async guardar(){
+      const bodyPersona= {
+        nombre: this.nombre,
+        apellido: this.apellido,
+        fechaNacimiento: this.fecha
+      }
+      await insertarFachada(bodyPersona);
     }
-}
-}
+  },
+};
 </script>
-
-<style>
-form {
-  display: flex;
-  flex-direction: column;
-  max-width: 400px;
-  margin: auto;
-  padding: 20px;
-  border: 1px solid #ccc;
-  border-radius: 5px;
-  background-color: #f9f9f9;
+   
+  <style>
+body {
+  background-color: #e0f7fa;
+  color: #01579b;
+  font-family: Arial, sans-serif;
 }
 
+h1 {
+  color: #0277bd;
+}
 label {
-  margin-top: 10px;
-  font-weight: bold;
+  display: block;
+  margin: 10px 0 5px;
 }
 
-input {
-  margin-top: 5px;
+input[type="text"],
+input[type="date"] {
+  width: 100%;
   padding: 8px;
-  border: 1px solid #ccc;
-  border-radius: 4px;
+  margin-bottom: 10px;
+  border: 1px solid #0288d1;
+  border-radius: 3px;
 }
 
 button {
-  margin-top: 20px;
-  padding: 10px;
-  background-color: #007bff;
+  background-color: #0288d1;
   color: white;
+  padding: 10px 20px;
   border: none;
   border-radius: 5px;
   cursor: pointer;
 }
 
 button:hover {
-  background-color: #0056b3;
+  background-color: #0277bd;
 }
 </style>
